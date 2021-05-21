@@ -10,6 +10,7 @@ function print_data($arq)
        if     ($arq == 'list_aviso_cirurgico_data.txt')     $poss =1;
        else if($arq == 'list_aviso_cirurgico_nome_pac.txt') $poss =2;
        else $poss =3;
+       echo $poss."<br>";
    }
 
    else if ($arq == 'list_chamada_cirurgia_data.txt' || $arq == 'list_chamada_transf.txt' || $arq == 'list_chamada_cirurgia_nome_pac.txt' || $arq == 'list_chamada_cirurgia_prestador.txt')
@@ -20,6 +21,7 @@ function print_data($arq)
         else if($arq == 'list_chamada_cirurgia_nome_pac.txt')   $poss =3;
         else if($arq == 'list_chamada_transf.txt')              $poss =2;
         else $poss = 4;
+        echo $poss."<br>";
    }
 
     else if ($arq == 'list_em_cirurgia_data.txt'  || $arq == 'list_em_cirurgia_nome_pac.txt' || $arq == 'list_em_cirurgia_prestador.txt'|| $arq == 'list_em_cirurgia_dt_entrada_centro_cir')
@@ -31,6 +33,7 @@ function print_data($arq)
         else if($arq == 'list_em_cirurgia_nome_pac.txt')              $poss =3;
         else if($arq == 'list_em_cirurgia_prestador.txt')             $poss =4;
         
+        echo $poss."<br>";
     }
 
     else if ( $arq == 'list_em_recuperacao_data.txt' || $arq == 'list_em_recuperacao_dt_entrada_rpa.txt' || $arq == 'list_em_recuperacao_dt_saida_rpa.txt'|| $arq == 'list_em_recuperacao_nome_pac.txt' || $arq == 'list_em_recuperacao_prestador.txt')
@@ -138,9 +141,7 @@ function receiver_data($arq_list,$nlin) //vou receber os array com os nomes dos 
                 if($ncol == 3)array_push( $list_em_recuperacao_dt_saida_rpa,$vet_receiver);
             }
         }
-        
-
-        
+                
 
         return array(array_values($list_chamada_cirurgia_data),array_values($list_chamada_cirurgia_nome_pac),array_values($list_chamada_cirurgia_prestador),array_values($list_chamada_dt_chamada_transf),
         array_values($list_aviso_cirurgico_data),array_values($list_aviso_cirurgico_nome_pac),array_values($list_aviso_cirurgico_prestador),
@@ -161,6 +162,7 @@ function list_names()
 
         $size_array = count($nomes_arq);
         
+        echo $size_array;
         
         list ($list_chamada_cirurgia_data,$list_chamada_cirurgia_nome_pac,$list_chamada_cirurgia_prestador,$list_chamada_dt_chamada_transf,
         $list_aviso_cirurgico_data,$list_aviso_cirurgico_nome_pac,$list_aviso_cirurgico_prestador,
@@ -174,7 +176,7 @@ function list_names()
         echo "chamada cirurgia nome paciente <br>";
         print_r($list_chamada_cirurgia_nome_pac);
         echo("<br>---------------------------------<br>");
-        echo "chamada cirurgia chamada data centro cirurgico <br>";
+        echo "chamada cirurgia chamada data transferencia <br>";
         print_r($list_chamada_dt_chamada_transf);
         echo("<br>---------------------------------<br>");
         echo "chamada cirurgia prestador <br>";
@@ -201,7 +203,7 @@ function list_names()
         echo "<br>aviso em cirurgia prestador <br>";
         print_r($list_em_cirurgia_prestador);
         echo("<br>---------------------------------<br>");
-        echo "<br>aviso em cirurgia data entrada recuperacao <br>";
+        echo "<br>aviso em cirurgia data entrada centro cirurgico <br>";
         print_r($list_em_cirurgia_dt_entrada_centro_cir);
 
 
@@ -215,8 +217,6 @@ function list_names()
         echo "<br> em recuperacao prestador <br>";
         print_r($list_em_recuperacao_prestador);
         echo("<br>---------------------------------<br>");
-        echo "<br> em recuperacao data centro cirurgico <br>";
-        echo("<br>---------------------------------<br>");
         echo "<br> em recuperacao entrada recuperacao <br>";
         print_r($list_em_recuperacao_dt_entrada_rpa);
         echo("<br>---------------------------------<br>");
@@ -225,4 +225,49 @@ function list_names()
         
     }
 
+function import_data($list_chamada_cirurgia_data,$list_chamada_cirurgia_nome_pac,$list_chamada_cirurgia_prestador,$list_chamada_dt_chamada_transf,
+$list_aviso_cirurgico_data,$list_aviso_cirurgico_nome_pac,$list_aviso_cirurgico_prestador,
+$list_em_cirurgia_data,$list_em_cirurgia_nome_pac,$list_em_cirurgia_prestador,$list_em_cirurgia_dt_entrada_centro_cir,
+$list_em_recuperacao_data,$list_em_recuperacao_nome_pac,$list_em_recuperacao_prestador,$list_em_recuperacao_dt_entrada_rpa,
+$list_em_recuperacao_dt_saida_rpa)
+{
+    
+    for ($i = 0; $i<16; $i++)
+    {
+        $chamada_cirurgia_data      =$list_chamada_cirurgia_data[$i];
+        $chamada_cirurgia_nome_pac  =$list_chamada_cirurgia_nome_pac[$i];
+        $chamada_cirurgia_prestador =$list_chamada_cirurgia_prestador[$i];
+        $chamada_dt_chamada_transf  =$list_chamada_dt_chamada_transf[$i];
+
+        $aviso_cirurgico_data      =$list_aviso_cirurgico_data;
+        $aviso_cirurgico_nome_pac  =$list_aviso_cirurgico_nome_pac;
+        $aviso_cirurgico_prestador =$list_aviso_cirurgico_prestador;
+
+        $cirurgia_data           = $list_em_cirurgia_data;
+        $cirurgia_nome_pac       =$list_em_cirurgia_nome_pac;
+        $cirurgia_prestador      =$list_em_cirurgia_prestador;
+        $cirurgia_dt_entrada_centro_cir =$list_em_cirurgia_dt_entrada_centro_cir;
+
+        $recuperacao_data               = $list_em_recuperacao_data;
+        $recuperacao_nome_pac           = $list_em_recuperacao_nome_pac;
+        $recuperacao_prestador          = $list_em_recuperacao_prestador;
+        $recuperacao_dt_entrada_rpa     = $list_em_recuperacao_dt_entrada_rpa;
+        $recuperacao_dt_saida_rpa       = $list_em_recuperacao_dt_saida_rpa;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 list_names();
+
+
+
+

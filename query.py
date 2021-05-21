@@ -104,21 +104,21 @@ def manda_gravar(list_aviso_cirurgico,list_em_cirurgia,list_chamada_cirurgia,lis
     nlin_em_cir = len(list_em_cirurgia)
     ncol_em_cir = len(list_em_cirurgia[0])
     for i in range(0,ncol_em_cir):
-        arquivo = ['list_em_cirurgia_data.txt','list_em_cirurgia_nome_pac.txt','list_em_cirurgia_prestador.txt','list_em_cirurgia_dt_entrada_rpa.txt']
+        arquivo = ['list_em_cirurgia_data.txt','list_em_cirurgia_nome_pac.txt','list_em_cirurgia_prestador.txt','list_em_cirurgia_dt_entrada_centro_cir.txt']
         grava_em_arquivo(arquivo[i],list_em_cirurgia,nlin_em_cir,i)
     #endfor
 
     nlin_chamada_cir = len(list_chamada_cirurgia)
     ncol_chamada_cir = len(list_chamada_cirurgia[0])
     for i in range(0,ncol_chamada_cir):
-        arquivo = ['list_chamada_cirurgia_data.txt','list_chamada_cirurgia_nome_pac.txt','list_chamada_cirurgia_prestador.txt','list_chamada_cirurgia_dt_centro_cir.txt']
+        arquivo = ['list_chamada_cirurgia_data.txt','list_chamada_cirurgia_nome_pac.txt','list_chamada_cirurgia_prestador.txt','list_chamada_transf.txt']
         grava_em_arquivo(arquivo[i],list_chamada_cirurgia,nlin_chamada_cir,i)
     #endfor
 
     nlin_em_rec = len(list_em_recuperacao)
     ncol_em_rec = len(list_em_recuperacao[0])
     for i in range(0,ncol_em_rec):
-        arquivo = ['list_em_recuperacao_data.txt','list_em_recuperacao_nome_pac.txt','list_em_recuperacao_prestador.txt','list_em_recuperacao_dt_centro_cir.txt','list_em_recuperacao_dt_chamada_transf.txt','list_em_recuperacao_dt_entrada_rpa.txt','list_em_recuperacao_dt_saida_rpa.txt']
+        arquivo = ['list_em_recuperacao_data.txt','list_em_recuperacao_nome_pac.txt','list_em_recuperacao_prestador.txt','list_em_recuperacao_dt_entrada_rpa.txt','list_em_recuperacao_dt_saida_rpa.txt']
         grava_em_arquivo(arquivo[i],list_em_recuperacao,nlin_em_rec,i)
     #endfor   
    
