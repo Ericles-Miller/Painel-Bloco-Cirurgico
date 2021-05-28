@@ -1,0 +1,188 @@
+﻿<?php
+  $nome = 'teste';
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Painel HUCF</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- FONTAWESOME STYLES-->
+	<link href="css/font-awesome.css" rel="stylesheet" />
+	<!-- GOOGLE FONTS-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+	<!--<link href="css/meu_css.css" rel="stylesheet" type="text/css" />-->
+
+
+	<!--  Fontfaces CSS  -->
+	<link href="css/font-face.css" rel="stylesheet" media="all">
+	<link href="vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+	<link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+	<link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle pull-left">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Usuário</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Sair</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="main">
+		<div class="menu">
+			<ul>
+				<li class="visible-xs"><a href="#">Sair</a></li>
+				<li class="active"><a href="#">Login</a></li>
+				<li><a href="#">Admin</a></li>
+				<li><a href="#">Intranet</a></li>
+				<li><a href="#">Links Úteis</a></li>
+			</ul>
+		</div>
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-3 text-center" id="caixa_azul">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h3 class="panel-title "><i class="fa fa-desktop"></i> Aviso Cirurgico</h3>
+								<!-- <h3 class="panel-title" ><span class="glyphicon glyphicon-search"></span> Aviso Cirurgico</h3> -->
+
+							</div>
+							
+							
+							<div class="panel-body">
+								<!--vou ter que pegar a cirurgia mais proxima-->
+								<h3>Silvaldo Não sei o que da Silva</h3>
+								<h4>Previsto para 8:30 </h5>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 text-center" id="caixa_verde">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-ambulance"></i> Chamada Cirurgica </h3>
+							</div>
+							<div class="panel-body">
+								<h3>João Avelino de Piripiri </h3>
+								<h4> Previsto para 11:30</h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 text-center">
+						<div class="panel panel-warning">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-medkit"></i> Em Cirurgia </h3>
+							</div>
+							<div class="panel-body">
+								<h3>João Avelino de Piripiri </h3>
+								<h4> Previsto para 15:30</h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3 text-center">
+						<div class="panel panel-danger">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-hospital-o"></i> Em Recuperação</h3>
+							</div>
+							<div class="panel-body">
+								<h3>Jose Fausto Silva </h3>
+								<h5>Ida para Enfermaria 16/05/2021 às 10:30</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-refresh"></i>  Atualizações</h3>
+							</div>
+							<div class="panel-body">
+								<div class="table-responsive">
+									<!-- Acrescenta a barra de rolagem em resolucções menores -->
+									<table class="table table-hover table-condesed"  id="teste">
+										<thead>
+										<script>
+										var xmlhttp = new XMLHttpRequest();
+										xmlhttp.onreadystatechange = function() {
+							  				if (this.readyState == 4 && this.status == 200) {
+							    			var list_aviso_cir = JSON.parse(this.responseText); 
+											document.getElementById("teste").innerHTML = `  <!-- preciso verificar essa parte-->
+												<!-- Cabeçalho da tabela -->
+												<tr class="active">
+													<th>Paciente</th>
+													<th>Data</th>
+													<th>Prestador</th>
+												</tr>
+												${data_aviso_cir()}
+												</thead>
+												<tbody>`
+												function data_aviso_cir()
+												{
+													let list_aviso_cirurgico = list_aviso_cir; ///parei aqui
+													let textTable = "";
+
+													<!-- Corpo da Tabela -->
+													for(let i in list_aviso_cir) {
+														textTable+= `
+														<tr>
+															<td>${list_aviso_cirurgico[i]['nome_paciente']}</td>
+															<td>	
+																<!-- class="hidden-xs" ->hidden-xs oculta a coluna em resoluções menores -->
+																<p>${list_aviso_cirurgico[i]['data_aviso']}</p>
+															</td>
+															<td>
+																<p>${list_aviso_cirurgico[i]['prestador_cirurgia']}</p>
+															</td>
+														</tr>`
+													}
+													return textTable;
+												}
+											}
+										};
+										xmlhttp.open("Post","list_aviso_cirurgico.json",true);
+										xmlhttp.send();
+										</script>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/jquery-3.1.1.js"></script> <!-- ok -->
+		<script type="text/javascript" src="js/script.js"></script><!-- ok -->
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="teste001.js"></script>
+</body>
+
+</html>

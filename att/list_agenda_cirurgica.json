@@ -1,0 +1,69 @@
+[
+    
+    {
+        "centro_cirurgico":"vazio",
+        "data_aviso":"27/05/2021 08:40",
+        "data_da_cirurgia":"27/05/2021 09:00",
+        "dt_centro_cirurgico":"27/05/2021 08:19",
+        "dt_chamada_transf":"27/05/2021 08:16",
+        "dt_entrada_rpa":"vazio",
+        "dt_saida_rpa":"vazio",
+        "nome_paciente":"BARBARA FERNANDA PEREIRA BARROSO",
+        "prestador_cirurgia":"ELISAMA"
+    },
+    {
+        "centro_cirurgico":"vazio",
+        "data_aviso":"27/05/2021 07:00",
+        "data_da_cirurgia":"27/05/2021 08:00",
+        "dt_centro_cirurgico":"27/05/2021 07:10",
+        "dt_chamada_transf":"27/05/2021 07:05",
+        "dt_entrada_rpa":"vazio",
+        "dt_saida_rpa":"vazio",
+        "nome_paciente":"THAMMY PEREIRA DOS SANTOS",
+        "prestador_cirurgia":"FLAVIA MAGALY"
+    },
+    {
+        "centro_cirurgico":"vazio",
+        "data_aviso":"27/05/2021 04:30",
+        "data_da_cirurgia":"27/05/2021 04:50",
+        "dt_centro_cirurgico":"vazio",
+        "dt_chamada_transf":"vazio",
+        "dt_entrada_rpa":"vazio",
+        "dt_saida_rpa":"vazio",
+        "nome_paciente":"JACIARA CARDOSO DE BRITO",
+        "prestador_cirurgia":"MARCIA CRISTINA"
+    },
+    {
+        "centro_cirurgico":"vazio",
+        "data_aviso":"27/05/2021 09:00",
+        "data_da_cirurgia":"27/05/2021 09:10",
+        "dt_centro_cirurgico":"27/05/2021 09:10",
+        "dt_chamada_transf":"27/05/2021 09:00",
+        "dt_entrada_rpa":"27/05/2021 11:01",
+        "dt_saida_rpa":"27/05/2021 11:01",
+        "nome_paciente":"JOSE DOS REIS DA SILVA",
+        "prestador_cirurgia":"MARCELO FAGUNGES"
+    },
+    {
+        "centro_cirurgico":"27/05/2021 08:44",
+        "data_aviso":"27/05/2021 08:00",
+        "data_da_cirurgia":"27/05/2021 07:10",
+        "dt_centro_cirurgico":"27/05/2021 07:10",
+        "dt_chamada_transf":"27/05/2021 07:00",
+        "dt_entrada_rpa":"27/05/2021 08:43",
+        "dt_saida_rpa":"27/05/2021 08:43",
+        "nome_paciente":"RUTH VASCONCELOS COSTA",
+        "prestador_cirurgia":"WYLLIAM"
+    },
+    {
+        "centro_cirurgico":"27/05/2021 10:58",
+        "data_aviso":"27/05/2021 08:00",
+        "data_da_cirurgia":"27/05/2021 07:00",
+        "dt_centro_cirurgico":"27/05/2021 07:00",
+        "dt_chamada_transf":"27/05/2021 06:40",
+        "dt_entrada_rpa":"27/05/2021 08:35",
+        "dt_saida_rpa":"27/05/2021 08:35",
+        "nome_paciente":"EDNEIA DE OLIVEIRA SOUSA",
+        "prestador_cirurgia":"WELLINGTON DA SILVA"
+    }
+]
