@@ -18,7 +18,7 @@ def view_bloco():
     # date = date.strftime("%d/%m/%y")
 
     cont = 0
-    select_requests = "select data_do_aviso, nome_paciente, prestador_da_cirurgia,dt_chamada_transf, dt_centro_cirurgico,data_da_cirurgia,dt_entrada_rpa,dt_saida_rpa,centro_Cirurgico from dbamv.vdic_agenda_cirurgia WHERE DT_AVISO >= to_date(SYSDATE-4) AND DT_AVISO <= to_date(SYSDATE-2)"
+    select_requests = "select data_do_aviso, nome_paciente, prestador_da_cirurgia,dt_chamada_transf, dt_centro_cirurgico,data_da_cirurgia,dt_entrada_rpa,dt_saida_rpa,centro_Cirurgico from dbamv.vdic_agenda_cirurgia WHERE DT_AVISO >= to_date(SYSDATE) AND DT_AVISO <= to_date(SYSDATE+1)"
     request = cursor.execute(select_requests)
     for requests in cursor.execute(select_requests):
         view_agenda_cirurgica = {'data_do_aviso': requests[0], 'nome_paciente': requests[1],'prestador_cirurgia': requests[2], 'dt_chamada_transf': requests[3],'dt_centro_cirurgico': requests[4], 'data_da_cirurgia': requests[5],'dt_entrada_rpa': requests[6], 'dt_saida_rpa': requests[6],'centro_cirurgico': requests[7]}
@@ -89,15 +89,33 @@ def receiver_agenda():
             dict_agenda['dt_entrada_rpa']       = list_agenda[i]['dt_entrada_rpa']
             dict_agenda['dt_saida_rpa']         = list_agenda[i]['dt_saida_rpa']
             dict_agenda['centro_cirurgico']     = list_agenda[i]['centro_cirurgico']
+            
+
+            if list_agenda[i]['data_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia']:
+                status = 'Aviso Cirúrgico'
+                dict_agenda['status'] = status
+
+            if list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i]['dt_centro_cirurgico'] != 'vazio':  # verificar
+                status = 'Em Cirurgia'
+                dict_agenda['status'] = status
+
+            if  list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i]['dt_chamada_transf'] != 'vazio':  # verificar
+                status = 'Chamada Cirurgia'
+                dict_agenda['status'] = status
+            
+            if  list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i][
+            'dt_entrada_rpa'] != 'vazio' and list_agenda[i]['dt_saida_rpa'] != 'vazio':  # verificar
+                status = 'Em Recuperação'
+                dict_agenda['status'] = status
 
             list_agenda_cirurgica.append(dict_agenda)
         #end if
     #endfor
 
     #funcao responsavel para ordenar os dados atraves da data
-    list_agenda_cirurgica = sorted(list_agenda, key=itemgetter('data_do_aviso'))
-    print(list_agenda_cirurgica)   
-    manda_gravar(list_agenda_cirurgica)
+    list_agenda_cirurgica = sorted(list_agenda_cirurgica, key=itemgetter('data_aviso'))
+    teste = len(list_agenda_cirurgica)
+    
 
     time.sleep(3800) #repete a execucao do script a cada 3 horas
     receiver_agenda()
@@ -112,7 +130,5 @@ def grava_em_arquivo(nome_arq,lista):
     with open(nome_arq, 'w', encoding='utf8') as f:
         json.dump(lista,f,ensure_ascii=False,sort_keys=True ,indent=4, separators=(',', ':'))
 #end
-
-
 
 receiver_agenda()
