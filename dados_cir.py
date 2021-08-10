@@ -1,24 +1,23 @@
-from datetime import date, datetime
+from datetime import datetime, timedelta
 import datetime
+import os, json, time
 import cx_Oracle
 from connection import mvintegra
 import connection
-import json
-import time
 from operator import itemgetter
 
 def view_bloco():
     list_agenda_cirurgica = []
     connection = mvintegra()
     cursor = connection.cursor()
-    cursor_secundario = connection.cursor()
+    #cursor_secundario = connection.cursor()
 
     # current_date = datetime.datetime.now()
     # date = current_date - datetime.timedelta(days = days)
     # date = date.strftime("%d/%m/%y")
 
     cont = 0
-    select_requests = "select data_do_aviso, nome_paciente, prestador_da_cirurgia,dt_chamada_transf, dt_centro_cirurgico,data_da_cirurgia,dt_entrada_rpa,dt_saida_rpa,centro_Cirurgico from dbamv.vdic_agenda_cirurgia WHERE DT_AVISO >= to_date(SYSDATE) AND DT_AVISO <= to_date(SYSDATE+1)"
+    select_requests = "select data_do_aviso, nome_paciente, prestador_da_cirurgia,dt_chamada_transf, dt_centro_cirurgico,data_da_cirurgia,dt_entrada_rpa,dt_saida_rpa,centro_Cirurgico from dbamv.vdic_agenda_cirurgia WHERE DT_AVISO >= to_date(SYSDATE) AND DT_AVISO < to_date(SYSDATE+1) AND CENTRO_CIRURGICO = 'CENTRO CIRURGICO'"
     request = cursor.execute(select_requests)
     for requests in cursor.execute(select_requests):
         view_agenda_cirurgica = {'data_do_aviso': requests[0], 'nome_paciente': requests[1],'prestador_cirurgia': requests[2], 'dt_chamada_transf': requests[3],'dt_centro_cirurgico': requests[4], 'data_da_cirurgia': requests[5],'dt_entrada_rpa': requests[6], 'dt_saida_rpa': requests[6],'centro_cirurgico': requests[7]}
@@ -27,32 +26,33 @@ def view_bloco():
     connection.commit()
 
     if list_agenda_cirurgica:
+        #print(list_agenda_cirurgica)
         return list_agenda_cirurgica
     else:
-        print("Lista bloco cirurgico vazia. O script fará uma nova pesquisa depois de 1 hora.")
-        time.sleep(3600) #mudar para 1 hora 
-        receiver_agenda()
+        print("Lista bloco cirurgico vazia. O script fará uma nova pesquisa depois de 3 minutos .")
+        #time.sleep(300) #mudar para 1 hora 
+        #os.system("cls")
+        #receiver_agenda_cir()
+        return 0
 
-def receiver_agenda():
+def receiver_agenda_cir():
     list_agenda = view_bloco()
     nlin = len(list_agenda)
-
+    list_remove = list()
+    
     for i in range(0,nlin):
-        #convet for strind data and datetime
+        if list_agenda[i]['data_da_cirurgia'] is None:
+           list_agenda[i]['data_da_cirurgia'] = 'vazio'
+        
+        #convet for string data and datetime
         if  list_agenda[i]['dt_chamada_transf'] is None:
             list_agenda[i]['dt_chamada_transf'] = 'vazio'
         else:
           #converter esse dado para string 
             aux = list_agenda[i]['dt_chamada_transf'].strftime('%d/%m/%Y %H:%M')
             list_agenda[i]['dt_chamada_transf'] = aux
-
-        if  list_agenda[i]['dt_saida_rpa'] is None: 
-            list_agenda[i]['dt_saida_rpa'] = 'vazio'
-        else:
-           aux = list_agenda[i]['dt_saida_rpa'].strftime('%d/%m/%Y %H:%M')
-           list_agenda[i]['dt_saida_rpa'] = aux
-
-        if  list_agenda[i]['dt_entrada_rpa']is None: 
+        
+        if  list_agenda[i]['dt_entrada_rpa'] is None: 
             list_agenda[i]['dt_entrada_rpa'] = 'vazio'
         else:
            aux = list_agenda[i]['dt_entrada_rpa'].strftime('%d/%m/%Y %H:%M')
@@ -67,12 +67,18 @@ def receiver_agenda():
         if  list_agenda[i]['centro_cirurgico'] is None:
             list_agenda[i]['centro_cirurgico'] = 'vazio'
         else:
-            aux = list_agenda[i]['centro_cirurgico'].strftime('%d/%m/%Y %H:%M')
+            aux = list_agenda[i]['centro_cirurgico'].strftime('%d/%m/%Y %H:%M:%S')
             list_agenda[i]['centro_cirurgico'] = aux
+            
+        if  list_agenda[i]['dt_saida_rpa'] is None: 
+            list_agenda[i]['dt_saida_rpa'] = 'vazio'    
+        else:             
+            aux = list_agenda[i]['dt_saida_rpa'].strftime('%d/%m/%Y %H:%M')
+            list_agenda[i]['dt_saida_rpa'] = aux  
+            
     #end for
     
-   
-
+    nlin = len(list_agenda)
     list_agenda_cirurgica  = []
     for i in range(0, nlin):
         if list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i][
@@ -91,38 +97,40 @@ def receiver_agenda():
             dict_agenda['centro_cirurgico']     = list_agenda[i]['centro_cirurgico']
             
 
-            if list_agenda[i]['data_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia']:
+            if list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia']and list_agenda[i]['dt_centro_cirurgico'] == 'vazio':
                 status = 'Aviso Cirúrgico'
                 dict_agenda['status'] = status
+            '''
+            if list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i]['dt_centro_cirurgico'] != 'vazio' and list_agenda[i]['dt_chamada_transf'] == 'vazio':  # verificar
+                status = 'Chamada Cirurgica'
+                dict_agenda['status'] = status'''
 
-            if list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i]['dt_centro_cirurgico'] != 'vazio':  # verificar
+            if  list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i]['dt_chamada_transf'] != 'vazio' and list_agenda[i][
+            'dt_entrada_rpa'] == 'vazio' and list_agenda[i]['dt_saida_rpa'] == 'vazio':  # verificar
                 status = 'Em Cirurgia'
-                dict_agenda['status'] = status
-
-            if  list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i]['dt_chamada_transf'] != 'vazio':  # verificar
-                status = 'Chamada Cirurgia'
                 dict_agenda['status'] = status
             
             if  list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i][
-            'dt_entrada_rpa'] != 'vazio' and list_agenda[i]['dt_saida_rpa'] != 'vazio':  # verificar
+            'dt_entrada_rpa'] != 'vazio' and list_agenda[i]['dt_saida_rpa'] == 'vazio' :  # verificar
                 status = 'Em Recuperação'
                 dict_agenda['status'] = status
 
+            if list_agenda[i]['data_do_aviso'] and list_agenda[i]['nome_paciente'] and list_agenda[i]['prestador_cirurgia'] and list_agenda[i][
+            'dt_entrada_rpa'] != 'vazio' and list_agenda[i]['dt_saida_rpa'] != 'vazio':
+                status = 'Alta Bloco Cirúrgico'
+                dict_agenda['status'] = status
+                
             list_agenda_cirurgica.append(dict_agenda)
         #end if
     #endfor
 
     #funcao responsavel para ordenar os dados atraves da data
     list_agenda_cirurgica = sorted(list_agenda_cirurgica, key=itemgetter('data_aviso'))
-    teste = len(list_agenda_cirurgica)
+    manda_gravar(list_agenda_cirurgica)
     
-
-    time.sleep(3800) #repete a execucao do script a cada 3 horas
-    receiver_agenda()
-
 
 def manda_gravar(list_agenda_cirurgica):
-    
+    print(list_agenda_cirurgica)
     arquivo = 'list_agenda_cirurgica.json'
     grava_em_arquivo(arquivo,list_agenda_cirurgica)
     
@@ -131,4 +139,4 @@ def grava_em_arquivo(nome_arq,lista):
         json.dump(lista,f,ensure_ascii=False,sort_keys=True ,indent=4, separators=(',', ':'))
 #end
 
-receiver_agenda()
+

@@ -1,8 +1,4 @@
-﻿<?php
-  $nome = 'teste';
-?>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -38,11 +34,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Usuário</a>
+				<a class="navbar-brand" href="#"> Painéis HUCF</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Sair</a></li>
+					<li><a href="#">Bloco Cirúrgico</a></li>
 				</ul>
 			</div>
 		</div>
@@ -51,10 +47,10 @@
 		<div class="menu">
 			<ul>
 				<li class="visible-xs"><a href="#">Sair</a></li>
-				<li class="active"><a href="#">Login</a></li>
-				<li><a href="#">Admin</a></li>
-				<li><a href="#">Intranet</a></li>
-				<li><a href="#">Links Úteis</a></li>
+				<li class="active"><a href="#">Bloco Obstétrico</a></li>
+				<li><a href="#">Endoscopia</a></li>
+				<!--<li><a href="#">Intranet</a></li>
+				<li><a href="#">Links Úteis</a></li>-->
 			</ul>
 		</div>
 		<div class="content">
@@ -81,9 +77,9 @@
 					<div class="col-sm-3 text-center" id="caixa_verde">
 						<div class="panel panel-success">
 							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-ambulance"></i> Chamada Cirurgica </h3>
+								<h3 class="panel-title"><i class="fa fa-ambulance"></i> Em Cirurgia </h3>
 							</div>
-							<div class="panel-body" id="chamada_cir">
+							<div class="panel-body" id="em_cir">
 								<!--<h3>João Avelino de Piripiri </h3>
 								<h4> Previsto para 11:30</h4>-->
 							</div>
@@ -92,9 +88,9 @@
 					<div class="col-sm-3 text-center">
 						<div class="panel panel-warning">
 							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-medkit"></i> Em Cirurgia </h3>
+								<h3 class="panel-title"><i class="fa fa-medkit"></i> Em Recuperação </h3>
 							</div>
-							<div class="panel-body" id="em_cir">
+							<div class="panel-body" id="em_rec">
 								<!--<h3>João Avelino de Piripiri </h3>
 								<h4> Previsto para 15:30</h4>-->
 							</div>
@@ -103,9 +99,9 @@
 					<div class="col-sm-3 text-center">
 						<div class="panel panel-danger">
 							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-hospital-o"></i> Em Recuperação</h3>
+								<h3 class="panel-title"><i class="fa fa-hospital-o"></i> Alta Bloco Cirúrgico</h3>
 							</div>
-							<div class="panel-body" id="em_rec">
+							<div class="panel-body" id="alta_bloc">
 								<!--<h3>Jose Fausto Silva </h3>
 								<h5>Ida para Enfermaria 16/05/2021 às 10:30</h5>-->
 							</div>
@@ -215,7 +211,7 @@
 		<script type="text/javascript" src="js/script.js"></script><!-- ok -->
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
-		<script src="listas_bloco.js"></script>
+		<script src="listas_bloco_cir.js"></script>
 </body>
 
 </html>
