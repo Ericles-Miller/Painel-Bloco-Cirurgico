@@ -4,13 +4,13 @@ import cx_Oracle
 #conexão banco mvintegra
 def mvintegra():
     dsn = cx_Oracle.makedsn (
-        '10.10.1.200',
-        '1521' ,
+        '',  #endereco e porta (retirei por motivos de segurança
+        '' , 
         service_name ='prdmv'
     )
     conn = cx_Oracle.connect(
-        user  =  'mvintegra' ,
-        password  =  'dbamv' ,
+        user  =  '' , #retirei por motivos de segurança 
+        password  =  '' ,
         dsn  =  dsn
     )
     return  conn  
